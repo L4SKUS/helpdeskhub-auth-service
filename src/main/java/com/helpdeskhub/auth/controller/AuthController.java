@@ -1,6 +1,6 @@
 package com.helpdeskhub.auth.controller;
 
-import com.helpdeskhub.auth.dto.AuthRequestDTO;
+import com.helpdeskhub.auth.dto.ValidationRequestDTO;
 import com.helpdeskhub.auth.dto.AuthResponseDTO;
 import com.helpdeskhub.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public AuthResponseDTO authenticate(@RequestBody AuthRequestDTO request) {
+    public AuthResponseDTO authenticate(@RequestBody ValidationRequestDTO request) {
         return authService.authenticate(request);
     }
 }

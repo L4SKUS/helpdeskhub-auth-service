@@ -1,6 +1,7 @@
 package com.helpdeskhub.auth.service;
 
-import com.helpdeskhub.auth.dto.AuthRequestDTO;
+import com.helpdeskhub.auth.dto.ValidationRequestDTO;
+import com.helpdeskhub.auth.dto.ValidationResponseDTO;
 import com.helpdeskhub.auth.dto.AuthResponseDTO;
 import com.helpdeskhub.auth.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +17,20 @@ public class AuthService {
 
     private final WebClient webClient = WebClient.create("http://localhost:8081/api/users");
 
-    public AuthResponseDTO authenticate(AuthRequestDTO request) {
+    public AuthResponseDTO authenticate(ValidationRequestDTO request) {
         try {
-            // Validate credentials via user-service
-            Boolean isValid = webClient.post()
+            ValidationResponseDTO userInfo = webClient.post()
                     .uri("/validate")
                     .bodyValue(request)
                     .retrieve()
-                    .bodyToMono(Boolean.class)
+                    .bodyToMono(ValidationResponseDTO.class)
                     .block();
 
-            if (Boolean.TRUE.equals(isValid)) {
+            if (userInfo != null) {
                 String token = jwtService.generateToken(request.getEmail());
-                return new AuthResponseDTO(token);
+                Integer id = userInfo.getId();
+                String role = userInfo.getRole();
+                return new AuthResponseDTO(token, id, role);
             } else {
                 throw new RuntimeException("Invalid credentials");
             }
