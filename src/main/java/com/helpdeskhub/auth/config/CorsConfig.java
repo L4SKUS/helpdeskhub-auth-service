@@ -9,7 +9,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://d2eeem2whmlsbq.cloudfront.net")
+                .allowedOrigins("http://helpdeskhub-app-bucket.s3-website.eu-central-1.amazonaws.com")
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true);

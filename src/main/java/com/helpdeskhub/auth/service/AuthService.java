@@ -15,7 +15,7 @@ public class AuthService {
     @Autowired
     private JwtService jwtService;
 
-    private final WebClient webClient = WebClient.create("http://localhost:8081/api/users");
+    private final WebClient webClient = WebClient.create("http://helpdeskhub-user-service.default.svc.cluster.local:8081/api/users");
 
     public AuthResponseDTO authenticate(ValidationRequestDTO request) {
         try {
